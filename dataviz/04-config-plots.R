@@ -2,6 +2,9 @@
 
 # Gerar um vetor com as configurações gerais do plot ----------------------
 # Como: cores, background, família textutal, títulos e outros
+# A vantagem é que alterações só são realizadas em um lugar
+# Títulos e eixos só compensam entrar nessa configuração se os gráficos forem
+# no mesmo padrão de dados
 
 # definindo itens
 config_plot <-
