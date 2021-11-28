@@ -66,4 +66,43 @@ highcharter::hcmap(
 
 
 
+# Mapa de abrangência -----------------------------------------------------
+output$mapa_relatorios <- highcharter::renderHighchart({
+    
+    # gerar resumo de relatório existente por estado
+    tb_relatorio_uf <- dados |>
+        # dplyr::filter()
+        dplyr::distinct(mapeamento, uf) |>
+        dplyr::filter(!is.na(uf)) |>
+        dplyr::group_by(mapeamento) |>
+        dplyr::mutate(valor = 1)
+    
+    # filtrar relatório
+    tb_relatorio_selecionado <- tb_relatorio_uf |>
+        # dplyr::filter(mapeamento == "IBÁ - Relatório Anual 2020")
+        dplyr::filter(mapeamento == input$nome_mapeamento)
+    
+    p_map <- highcharter::hcmap(
+        map = "countries/br/br-all",
+        nullColor = "#d3d3d3",
+        data = tb_relatorio_selecionado,
+        value = "valor",
+        joinBy = c("hc-a2", "uf"),
+        borderColor = "#FAFAFA",
+        borderWidth = 0.1,
+        name = "Estado",
+        dataLabels = list(enabled = TRUE, format = "{point.code}"),
+        tooltip = list(valueDecimals = 0),
+        download_map_data = F
+    ) |>
+        highcharter::hc_legend(ggplot2::element_blank()) |>
+        highcharter::hc_colorAxis(
+            minColor = "#008d4c",
+            maxColor = "#008d4c"
+        )
+    
+    p_map
+
+
+
 
