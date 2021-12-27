@@ -16,3 +16,20 @@ scales::show_col(viridis::viridis_pal(option = "cividis")(7))
 
 # pegar o número diretamente
 viridis::viridis(6)
+
+
+
+
+# outro pacote para cores
+install.packages("RColorBrewer")
+library("RColorBrewer")
+
+# mostrar todas as paletas disponíveis
+RColorBrewer::display.brewer.all()
+
+# visualizar somente uma paleta
+RColorBrewer::display.brewer.pal(n =10 ,
+                                 name = "Paired")
+
+# mostrar códigos das cores
+RColorBrewer::brewer.pal(n =3, name = "Pastel1")
