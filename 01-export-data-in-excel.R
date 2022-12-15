@@ -93,7 +93,7 @@ estilo_cabecalho <- openxlsx::createStyle(
     fontSize = 13,
     fontColour = "#2C0E72",
     border = "bottom",
-    wrapText = TRUE
+    wrapText = FALSE # quebrar texto
 )
 
 estilo_currency <- openxlsx::createStyle(numFmt = "CURRENCY")
@@ -135,3 +135,34 @@ openxlsx::addStyle(
 openxlsx::saveWorkbook(wb, file = filename, overwrite = TRUE)
 
 
+# Formatting the spreadsheet ----------------------------------------------
+
+# formatar largura das colunas 1 e 6
+openxlsx::setColWidths(
+    wb = wb,
+    sheet = "diamond_data",
+    cols = c(1, 6),
+    widths = 3
+)
+
+# formatar a largura das restantes
+openxlsx::setColWidths(
+    wb = wb,
+    sheet = "diamond_data",
+    cols = c(2:5, 7:8),
+    widths = "auto"
+)
+
+# caso seja necessário formatar o tamanho da linha
+# openxlsx::setRowHeights(wb = wb, sheet = "diamond_data", rows = 1, heights = 40)
+
+# congelar painel superior e coluna inicial
+openxlsx::freezePane(
+    wb = wb,
+    sheet = "diamond_data",
+    firstActiveRow = 2,
+    firstActiveCol = 3
+)
+
+# salvar workbook
+openxlsx::saveWorkbook(wb, file = filename, overwrite = TRUE)
