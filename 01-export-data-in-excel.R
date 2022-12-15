@@ -86,8 +86,52 @@ openxlsx::saveWorkbook(wb, file = filename, overwrite = TRUE)
 
 
 
+# Formatting cells --------------------------------------------------------
+
+# criar estilos
+estilo_cabecalho <- openxlsx::createStyle(
+    fontSize = 13,
+    fontColour = "#2C0E72",
+    border = "bottom",
+    wrapText = TRUE
+)
+
+estilo_currency <- openxlsx::createStyle(numFmt = "CURRENCY")
+estilo_input_usuario <- openxlsx::createStyle(fgFill = "#FFF078")
+
+# aplicar estilo ao cabeçalho
+openxlsx::addStyle(
+    wb = wb,
+    sheet = "diamond_data",
+    style = estilo_cabecalho,
+    rows = 1,
+    cols = 2:8,
+    gridExpand = TRUE
+)
 
 
+# aplicar estilo aos números
+openxlsx::addStyle(
+    wb = wb,
+    sheet = "diamond_data",
+    style = estilo_currency,
+    rows = 2:6,
+    cols = 4:5,
+    gridExpand = TRUE
+)
 
+
+# aplicar estilo à coluna de input do usuário
+openxlsx::addStyle(
+    wb = wb,
+    sheet = "diamond_data",
+    style = estilo_input_usuario,
+    rows = 2:6,
+    cols = 7,
+    gridExpand = TRUE
+)
+
+# salvar workbook
+openxlsx::saveWorkbook(wb, file = filename, overwrite = TRUE)
 
 
