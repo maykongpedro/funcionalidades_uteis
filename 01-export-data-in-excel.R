@@ -150,7 +150,9 @@ openxlsx::setColWidths(
     wb = wb,
     sheet = "diamond_data",
     cols = c(2:5, 7:8),
-    widths = "auto"
+    widths = 15
+    # widths = "auto" # se usar esse argumento ele dá problema na hora de adicionar
+                      # formatação condicional
 )
 
 # caso seja necessário formatar o tamanho da linha
@@ -166,3 +168,43 @@ openxlsx::freezePane(
 
 # salvar workbook
 openxlsx::saveWorkbook(wb, file = filename, overwrite = TRUE)
+
+
+
+# Conditional formatting --------------------------------------------------
+
+# criar estilo para o valor negativo
+estilo_valor_negativo <- openxlsx::createStyle(
+    fontColour = "#9C0006", 
+    bgFill = "#FFC7CE"
+    )
+
+# criar estilo para o valor positivo
+estilo_valor_positivo <- openxlsx::createStyle(
+    fontColour = "#006100", 
+    bgFill = "#C6EFCE"
+    )
+
+# aplicar formatação condicional para valores negativos
+openxlsx::conditionalFormatting(
+    wb = wb,
+    sheet = "diamond_data",
+    cols = 8,
+    rows = 2:6,
+    rule = "<0",
+    style = estilo_valor_negativo
+)
+
+# aplicar formatação condicional para valores positivos
+openxlsx::conditionalFormatting(
+    wb = wb,
+    sheet = "diamond_data",
+    cols = 8,
+    rows = 2:6,
+    rule = ">0",
+    style = estilo_valor_positivo
+)
+
+# salvar workbook
+openxlsx::saveWorkbook(wb, file = filename, overwrite = TRUE)
+
